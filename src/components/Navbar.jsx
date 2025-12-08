@@ -1,18 +1,63 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { jwtDecode } from "jwt-decode";
 
 import { FaFeatherAlt } from "react-icons/fa";
-import { FiMenu, FiX, FiHome, FiBookOpen, FiEdit } from "react-icons/fi";
+import {
+  FiMenu,
+  FiX,
+  FiHome,
+  FiBookOpen,
+  FiEdit,
+  FiLogOut,
+} from "react-icons/fi";
 import { MdPersonAddAlt1 } from "react-icons/md";
 
 export default function Navbar() {
   const path = usePathname();
+  const router = useRouter();
+
+  const [openDropdown, setOpenDropdown] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // --- CHECK LOGIN TOKEN ---
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const decoded = jwtDecode(token);
+      setUser(decoded);
+      setIsLoggedIn(true);
+    } catch {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  // --- LOGOUT ---
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+    setIsLoggedIn(false);
+    router.push("/");
+    window.location.reload();
+  };
+  useEffect(() => {
+    const close = (e) => {
+      if (!e.target.closest(".dropdown-area")) setOpenDropdown(false);
+    };
+    document.addEventListener("click", close);
+    return () => document.removeEventListener("click", close);
+  }, []);
+
+  // --- NAV LINKS ---
   const links = [
     { name: "Home", href: "/", icon: <FiHome size={17} /> },
     { name: "Blogs", href: "/blog", icon: <FiBookOpen size={17} /> },
@@ -21,48 +66,39 @@ export default function Navbar() {
   ];
 
   return (
-    <header
-      suppressHydrationWarning
-      className="fixed top-0 left-0 w-full z-50 bg-white/30 backdrop-blur-2xl 
-      border-b border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
-    >
+    <header className="fixed top-0 left-0 w-full z-50 bg-white/30 backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-        {/* LOGO (NO initial animation) */}
-        <div>
-          <Link href="/" className="flex items-center gap-2 group">
-            <motion.div
-              whileHover={{ rotate: -10, scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 250 }}
-            >
-              <FaFeatherAlt size={22} className="text-gray-800 group-hover:text-black transition" />
-            </motion.div>
-
-            <span className="text-xl font-bold tracking-tight 
-            bg-gradient-to-r from-black to-gray-700 text-transparent bg-clip-text">
-              BlogSphere
-            </span>
-          </Link>
-        </div>
+        {/* LOGO */}
+        <Link href="/" className="flex items-center gap-2 group">
+          <motion.div
+            whileHover={{ rotate: -10, scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 250 }}
+          >
+            <FaFeatherAlt
+              size={22}
+              className="text-gray-800 group-hover:text-black transition"
+            />
+          </motion.div>
+          <span className="text-xl font-bold tracking-tight bg-linear-to-r from-black to-gray-700 text-transparent bg-clip-text">
+            BlogSphere
+          </span>
+        </Link>
 
         {/* CENTER NAV LINKS */}
         <nav className="hidden md:flex items-center gap-10 mx-auto relative">
-
           {links.map((l) => {
             const isActive = path === l.href;
-
             return (
               <div key={l.href} className="relative">
                 <Link
                   href={l.href}
-                  className={`flex items-center gap-2 px-4 py-2 text-sm font-medium 
-                    transition-all rounded-xl
-                    ${isActive ? "text-black" : "text-gray-700 hover:text-black"}`}
+                  className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all rounded-xl ${
+                    isActive ? "text-black" : "text-gray-700 hover:text-black"
+                  }`}
                 >
                   {l.icon} {l.name}
                 </Link>
 
-                {/* Smooth underline - hydration safe */}
                 {isActive && (
                   <motion.div
                     layoutId="underline-bar"
@@ -74,20 +110,70 @@ export default function Navbar() {
               </div>
             );
           })}
-
         </nav>
 
-        {/* CTA BUTTON (NO initial animation) */}
-        <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }} className="hidden md:flex">
-          <Link
-            href="/guest/login"
-            className="px-6 py-2 rounded-xl text-sm font-semibold border border-black/60 
-            shadow-[inset_0_0_10px_rgba(0,0,0,0.15)] flex items-center gap-2 
-            bg-white/40 hover:bg-black hover:text-white transition-all backdrop-blur-md"
-          >
-            <MdPersonAddAlt1 size={17} /> Be Our Guest
-          </Link>
-        </motion.div>
+        {/* RIGHT SIDE */}
+        <div className="hidden md:flex items-center gap-4 relative dropdown-area">
+          {!isLoggedIn ? (
+            <Link
+              href="/guest/login"
+              className="px-6 py-2 rounded-xl text-sm font-semibold border border-black/60 shadow-[inset_0_0_10px_rgba(0,0,0,0.15)] flex items-center gap-2 bg-white/40 hover:bg-black hover:text-white transition-all backdrop-blur-md"
+            >
+              <MdPersonAddAlt1 size={17} /> Be Our Guest
+            </Link>
+          ) : (
+            <>
+              {/* Avatar (First letter) */}
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setOpenDropdown(!openDropdown)}
+                className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold shadow-md"
+              >
+                {user?.name?.charAt(0)?.toUpperCase() || "U"}
+              </motion.button>
+
+              {/* DROPDOWN */}
+              <AnimatePresence>
+                {openDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: -5 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: -5 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-0 top-14 bg-black/30 shadow-lg rounded-xl border border-gray-900 w-52 p-2 z-50 space-y-1"
+                  >
+                    <p className="px-3 py-2 text-sm font-medium text-gray-900">
+                      Hi, {user?.name || "User"} 
+                    </p>
+
+                    <Link
+                      href="/profile"
+                      className="block px-3 py-2 text-sm hover:bg-black hover:text-white rounded-lg"
+                    >
+                      Profile
+                    </Link>
+
+                    {user?.role === "admin" && (
+                      <Link
+                        href="/admin/dashboard"
+                        className="block px-3 py-2 text-sm hover:bg-black hover:text-white  rounded-lg"
+                      >
+                        Admin Dashboard
+                      </Link>
+                    )}
+
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-3 py-2 text-sm text-white bg-black rounded-lg"
+                    >
+                      Logout
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </>
+          )}
+        </div>
 
         {/* MOBILE MENU BUTTON */}
         <button
@@ -96,7 +182,6 @@ export default function Navbar() {
         >
           {open ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
-
       </div>
 
       {/* MOBILE MENU */}
@@ -107,29 +192,42 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden bg-white/90 backdrop-blur-xl border-b border-gray-200 
-            shadow-md py-4 px-6 space-y-2"
+            className="md:hidden bg-white/90 backdrop-blur-xl border-b border-gray-200 shadow-md py-4 px-6 space-y-2"
           >
             {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition 
-                  ${path === l.href ? "bg-black text-white" : "text-gray-700 hover:bg-gray-200/70"}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${
+                  path === l.href
+                    ? "bg-black text-white"
+                    : "text-gray-700 hover:bg-gray-200/70"
+                }`}
               >
                 {l.icon} {l.name}
               </Link>
             ))}
 
-            <Link
-              href="/guest/login"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold
-              border border-black hover:bg-black hover:text-white transition"
-            >
-              <MdPersonAddAlt1 size={17} /> Be Our Guest
-            </Link>
+            {!isLoggedIn ? (
+              <Link
+                href="/guest/login"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold border border-black hover:bg-black hover:text-white transition"
+              >
+                <MdPersonAddAlt1 size={17} /> Be Our Guest
+              </Link>
+            ) : (
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setOpen(false);
+                }}
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold border border-black bg-black text-white hover:bg-red-600 transition"
+              >
+                <FiLogOut size={17} /> Logout
+              </button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
