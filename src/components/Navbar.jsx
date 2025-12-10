@@ -66,7 +66,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white/30 backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+    <header className="fixed top-0 left-0 w-full z-50 bg-black backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* LOGO */}
         <Link href="/" className="flex items-center gap-2 group">
@@ -76,10 +76,10 @@ export default function Navbar() {
           >
             <FaFeatherAlt
               size={22}
-              className="text-gray-800 group-hover:text-black transition"
+              className="text-white group-hover:text-sky-400 transition"
             />
           </motion.div>
-          <span className="text-xl font-bold tracking-tight bg-linear-to-r from-black to-gray-700 text-transparent bg-clip-text">
+          <span className="text-xl font-bold tracking-tight bg-linear-to-r from-sky-200 to-sky-100 text-transparent bg-clip-text">
             BlogSphere
           </span>
         </Link>
@@ -93,7 +93,7 @@ export default function Navbar() {
                 <Link
                   href={l.href}
                   className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all rounded-xl ${
-                    isActive ? "text-black" : "text-gray-700 hover:text-black"
+                    isActive ? "text-sky-200" : "text-sky-100 hover:text-sky-300"
                   }`}
                 >
                   {l.icon} {l.name}
@@ -103,7 +103,7 @@ export default function Navbar() {
                   <motion.div
                     layoutId="underline-bar"
                     initial={false}
-                    className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-black rounded-full"
+                    className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-sky-100 rounded-full"
                     transition={{ type: "spring", stiffness: 300, damping: 22 }}
                   />
                 )}
@@ -117,7 +117,7 @@ export default function Navbar() {
           {!isLoggedIn ? (
             <Link
               href="/guest/login"
-              className="px-6 py-2 rounded-xl text-sm font-semibold border border-black/60 shadow-[inset_0_0_10px_rgba(0,0,0,0.15)] flex items-center gap-2 bg-white/40 hover:bg-black hover:text-white transition-all backdrop-blur-md"
+              className="px-6 py-2 rounded-xl text-sm font-semibold border-2 border-sky-300/60 shadow-[inset_0_0_10px_rgba(0,0,0,0.15)] flex items-center gap-2 text-sky-200 hover:bg-sky-100 hover:text-black transition-all backdrop-blur-md"
             >
               <MdPersonAddAlt1 size={17} /> Be Our Guest
             </Link>
@@ -127,7 +127,7 @@ export default function Navbar() {
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setOpenDropdown(!openDropdown)}
-                className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold shadow-md"
+                className="w-10 h-10 rounded-full bg-sky-200  text-black flex items-center justify-center font-bold shadow-md"
               >
                 {user?.name?.charAt(0)?.toUpperCase() || "U"}
               </motion.button>
@@ -140,7 +140,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: -5 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 top-14 bg-black/30 shadow-lg rounded-xl border border-gray-900 w-52 p-2 z-50 space-y-1"
+                    className="absolute right-0 top-14 bg-sky-800/30 shadow-lg rounded-xl border border-sky-900/30 w-52 p-3 z-50 space-y-1"
                   >
                     <p className="px-3 py-2 text-sm font-medium text-gray-900">
                       Hi, {user?.name || "User"} 
@@ -178,7 +178,7 @@ export default function Navbar() {
         {/* MOBILE MENU BUTTON */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden p-2 rounded bg-white/60 border border-gray-200 shadow"
+          className="md:hidden p-2 rounded text-sky-400 bg-sky-900/60 shadow"
         >
           {open ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
@@ -192,17 +192,17 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden bg-white/90 backdrop-blur-xl border-b border-gray-200 shadow-md py-4 px-6 space-y-2"
+            className="md:hidden bg-sky-200/70 backdrop-blur-xl  shadow-md py-4 px-6 space-y-2"
           >
             {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${
+                className={`flex items-center gap-3 px-8 py-3 rounded-lg text-sm font-medium transition ${
                   path === l.href
-                    ? "bg-black text-white"
-                    : "text-gray-700 hover:bg-gray-200/70"
+                    ? "bg-black  text-white"
+                    : "text-black hover:bg-sky-700/70"
                 }`}
               >
                 {l.icon} {l.name}
@@ -213,7 +213,7 @@ export default function Navbar() {
               <Link
                 href="/guest/login"
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold border border-black hover:bg-black hover:text-white transition"
+                className="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-semibold  border-2 border-black hover:bg-sky-950 hover:text-black transition"
               >
                 <MdPersonAddAlt1 size={17} /> Be Our Guest
               </Link>
@@ -223,7 +223,7 @@ export default function Navbar() {
                   handleLogout();
                   setOpen(false);
                 }}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold border border-black bg-black text-white hover:bg-red-600 transition"
+                className="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-semibold border border-black bg-black text-white hover:bg-red-600 transition"
               >
                 <FiLogOut size={17} /> Logout
               </button>

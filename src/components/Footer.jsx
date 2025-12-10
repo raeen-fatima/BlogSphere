@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
-
+import { FaFeatherAlt } from "react-icons/fa";
 export default function Footer() {
   const links = [
     { name: "Home", href: "/" },
@@ -19,17 +19,23 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-900 text-gray-300 py-12">
+    <footer className="bg-black text-sky-300 py-12 mt-auto">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
         {/* Brand */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-2xl font-bold text-white"
-        >
-          BlogSphere
-        </motion.div>
+        <Link href="/" className="flex items-center gap-2 group">
+          <motion.div
+            whileHover={{ rotate: -10, scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 250 }}
+          >
+            <FaFeatherAlt
+              size={22}
+              className="text-white group-hover:text-sky-400 transition"
+            />
+          </motion.div>
+          <span className="text-xl font-bold tracking-tight bg-linear-to-r from-sky-200 to-sky-100 text-transparent bg-clip-text">
+            BlogSphere
+          </span>
+        </Link>
 
         {/* Quick Links */}
         <motion.div
@@ -42,7 +48,7 @@ export default function Footer() {
             <Link
               key={link.name}
               href={link.href}
-              className="hover:text-white transition-colors"
+              className= "text-sky-100 hover:text-sky-200 font-medium transition-colors"
             >
               {link.name}
             </Link>
@@ -62,7 +68,7 @@ export default function Footer() {
               href={social.href}
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
-              className="text-gray-400 hover:text-white transition"
+              className="text-sky-200 hover:text-sky-300 transition"
             >
               {social.icon}
             </motion.a>
@@ -71,10 +77,10 @@ export default function Footer() {
       </div>
 
       {/* Divider */}
-      <div className="border-t border-gray-700 mt-8" />
+      <div className="border-t border-sky-200 mt-8" />
 
       {/* Copyright */}
-      <div className="max-w-7xl mx-auto px-6 mt-6 text-center text-sm text-gray-500">
+      <div className=" max-w-7xl mx-auto px-6 mt-6 text-center text-sm text-sky-100">
         © {new Date().getFullYear()} BlogSphere. All rights reserved.
       </div>
     </footer>

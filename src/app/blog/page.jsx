@@ -1,45 +1,70 @@
 import Link from "next/link";
+import Image from "next/image";
 
-export default async function BlogPage() {
-  let posts = [];
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+// Fetch blogs from backend
+async function getBlogs() {
   try {
-    const res = await fetch("http://localhost:3000/api/posts", {
-      cache: "no-store",
-    });
+    const res = await fetch(`${API_URL}/api/posts`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to fetch posts");
 
-    const json = await res.json();
-
-    if (Array.isArray(json)) {
-      posts = json;
-    } else if (json?.data && Array.isArray(json.data)) {
-      posts = json.data;
-    }
+    const data = await res.json();
+    return data.data || []; // backend returns { data: [...] }
   } catch (err) {
-    console.log("Fetch error:", err);
+    console.error("Server Error fetching posts:", err);
+    return [];
   }
+}
+
+export default async function BlogsPage() {
+  const blogs = await getBlogs();
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      
-      <h1 className="text-3xl font-bold mb-4">All Blogs</h1>
+    <div className="max-w-6xl mx-auto p-6 pt-24">
+      <h1 className="text-4xl font-bold mb-8 text-center">All Blogs</h1>
 
-      {posts.length === 0 && (
-        <p className="text-gray-500">No blogs yet</p>
+      {blogs.length === 0 ? (
+        <p className="text-center text-gray-500">No blogs available.</p>
+      ) : (
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blogs.map((blog) => (
+            <div
+              key={blog._id}
+              className="bg-white border rounded-xl shadow hover:shadow-xl transition p-4 flex flex-col"
+            >
+              {blog.image && (
+                <div className="relative w-full h-48 mb-4 rounded overflow-hidden">
+                  <Image
+                    src={blog.image}
+                    alt={blog.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw,
+                           (max-width: 1200px) 50vw,
+                           33vw"
+                  />
+                </div>
+              )}
+
+              <h2 className="text-xl font-semibold mb-2 line-clamp-2">{blog.title}</h2>
+
+              <p className="text-gray-600 mb-4 line-clamp-3">
+                {blog.content}
+              </p>
+
+              <div className="mt-auto">
+                <Link
+                  href={`/blog/${blog.slug}`}
+                  className="text-blue-600 hover:underline font-medium"
+                >
+                  Read More →
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
-
-      <div className="flex flex-col gap-4 mt-4">
-        {posts.map((post) => (
-          <Link
-            key={post._id}
-            href={`/blog/${post._id}`}
-            className="p-4 border rounded hover:bg-gray-100"
-          >
-            <h2 className="text-xl font-bold">{post.title}</h2>
-            <p>{post.content.substring(0, 100)}...</p>
-          </Link>
-        ))}
-      </div>
     </div>
   );
 }
