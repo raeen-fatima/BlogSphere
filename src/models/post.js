@@ -1,16 +1,36 @@
 import mongoose from "mongoose";
-import User from "@/models/user";  // <-- Importing User model
-const PostSchema = new mongoose.Schema({
-  title: String,
-      content: String,
-      slug: { type: String, unique: true },
-      coverImage: String,
-      author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"   // <-- this is why User model is required
-      }
+
+const PostSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+
+    slug: {
+      type: String,
+      unique: true,
+      required: true,
     },
-    { timestamps: true },
+
+    coverImage: { type: String, default: null },
+
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  },
+  { timestamps: true }
 );
+
+// 🔥 Automatically generate slug if not provided
+PostSchema.pre("validate", function (next) {
+  if (this.title && !this.slug) {
+    this.slug = this.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+  }
+  next();
+});
 
 export default mongoose.models.Post || mongoose.model("Post", PostSchema);

@@ -13,7 +13,7 @@ const teamMembers = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-100 via-white to-gray-100 text-white relative overflow-hidden px-6 py-20 pt-28">
+    <div className="min-h-screen bg-linear-to-b from-gray-100 via-white to-gray-100 text-white relative overflow-hidden px-6 py-20">
       {/* BACKGROUND SPARKLES */}
       <div className="absolute inset-0 z-0 opacity-40">
         <SparklesCore

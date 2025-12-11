@@ -1,13 +1,31 @@
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema(
+const CommentSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, default: "user" },
+    postId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+      required: true,
+    },
+
+    authorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+
+    authorName: {
+      type: String,
+      default: "Anonymous",
+    },
+
+    text: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.models.User || mongoose.model("User", UserSchema);
+export default mongoose.models.Comment ||
+  mongoose.model("Comment", CommentSchema);

@@ -105,7 +105,7 @@ const { slug } = params;
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 pt-24">
+    <div className="max-w-3xl mx-auto p-6">
       {blog.coverImage && (
         <div className="relative w-full h-64 rounded overflow-hidden mb-6">
           <Image

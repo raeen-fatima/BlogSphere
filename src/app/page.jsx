@@ -1,89 +1,31 @@
-import Link from "next/link";
+import BlogCard from "@/components/BlogCard";
 
 export default async function BlogPage() {
   let posts = [];
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   try {
     const res = await fetch(`${API_URL}/api/posts`, { cache: "no-store" });
-
-
     const json = await res.json();
-
-    if (Array.isArray(json)) posts = json;
-    else if (json?.data && Array.isArray(json.data)) posts = json.data;
+    if (Array.isArray(json?.data)) posts = json.data;
   } catch (err) {
     console.error("Error fetching posts:", err);
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200 pt-24 py-12 px-6">
-      
-      {/* PAGE HEADER */}
-      <div className="max-w-6xl mx-auto flex items-center justify-between mb-10">
-        <div>
-          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
-            Explore Blogs
-          </h1>
-          <p className="text-gray-600 mt-2">
-            Discover creative posts written by community and writers.
-          </p>
-        </div>
+    <main className="max-w-4xl  mx-auto px-4 py-10">
+      <section className="text-center mb-12">
+        <h1 className="text-4xl font-extrabold">Your Daily Source of Truth</h1>
+        <p className="text-gray-600 mt-2">
+          Read inspiring stories, explore ideas, and publish your thoughts.
+        </p>
+      </section>
 
-        <Link
-          href="/blog/create"
-          className="bg-black text-white px-5 py-3 rounded-lg shadow hover:bg-gray-900 transition"
-        >
-          Create New Blog
-        </Link>
-      </div>
-
-      {/* EMPTY STATE */}
-      {posts.length === 0 && (
-        <div className="max-w-3xl mx-auto text-center p-10 bg-white/60 backdrop-blur shadow rounded-xl">
-          <h2 className="text-xl font-semibold text-gray-700">No posts yet</h2>
-          <p className="text-gray-500 mt-2">
-            Start by creating your first blog.
-          </p>
-          <Link
-            href="/blog/create"
-            className="mt-4 inline-block bg-black text-white px-4 py-2 rounded hover:bg-gray-900"
-          >
-            Write One
-          </Link>
-        </div>
-      )}
-
-      {/* BLOG CARDS GRID */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mt-6">
+      <section className="flex flex-col gap-6">
         {posts.map((post) => (
-          <Link
-            key={post._id}
-            href={`/blog/${post._id}`}
-            className="block bg-white/70 backdrop-blur-lg shadow-sm hover:shadow-xl transition-all p-6 rounded-xl border border-white/40 hover:-translate-y-1"
-          >
-            {/* TITLE */}
-            <h2 className="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">
-              {post.title}
-            </h2>
-
-            {/* CONTENT PREVIEW */}
-            <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4">
-              {post.content}
-            </p>
-
-            {/* FOOTER */}
-            <div className="flex items-center justify-between mt-4 border-t pt-3 border-gray-200/50">
-              <span className="text-xs text-gray-500">
-                {new Date(post.createdAt).toLocaleDateString()}
-              </span>
-
-              <span className="text-blue-600 text-sm font-medium">
-                Read More →
-              </span>
-            </div>
-          </Link>
+          <BlogCard key={post._id} post={post} />
         ))}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
