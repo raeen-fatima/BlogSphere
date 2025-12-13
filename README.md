@@ -126,12 +126,6 @@ JWT_SECRET=your_secret_key
 
 ---
 
-## ⏭️ Next Steps
-
-* Blog CRUD system
-* Admin Dashboard
-* Comment & Like system
-* Deployment
 
 ---
 
