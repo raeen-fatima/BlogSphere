@@ -1,25 +1,45 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
+import {
+  FiLogOut,
+  FiUser,
+  FiMenu,
+  FiX,
+  FiHome,
+  FiInfo,
+  FiMail,
+  FiSettings,
+} from "react-icons/fi";
+import { FaFeatherAlt } from "react-icons/fa";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const dropRef = useRef(null);
 
-  // fetch logged-in user
   useEffect(() => {
     const getUser = async () => {
       const res = await fetch("/api/auth/me");
-      if (res.ok) {
-        const data = await res.json();
-        setUser(data);
-      }
+      if (res.ok) setUser(await res.json());
     };
     getUser();
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (dropRef.current && !dropRef.current.contains(e.target)) {
+        setDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   const logout = async () => {
@@ -28,77 +48,117 @@ export default function Navbar() {
     router.push("/login");
   };
 
+  const navLink = (href, label, Icon) => (
+    <Link
+      href={href}
+      onClick={() => setMenuOpen(false)}
+      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition ${
+        pathname === href
+          ? "bg-black text-white"
+          : "text-gray-700 hover:bg-gray-100"
+      }`}
+    >
+      <Icon />
+      {label}
+    </Link>
+  );
+
   return (
-    <nav className="fixed top-0 w-full z-20 border-b bg-white">
-      <div className="max-w-7xl mx-auto p-4 flex justify-between items-center">
+    <nav className="fixed top-0 w-full z-50 backdrop-blur bg-white/80 border-b">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold">BlogSphere</span>
+        <Link href="/" className="text-2xl font-bold tracking-tight flex items-center gap-2">
+          <FaFeatherAlt className="text-gray-800" />
+          Blog<span className="text-gray-800">Sphere</span>
         </Link>
 
-        {/* Links */}
-        <ul className="hidden md:flex gap-6 font-medium">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/about">About</Link></li>
-          <li><Link href="/contact">Contact</Link></li>
-        </ul>
+        {/* Desktop Links */}
+        <div className="hidden md:flex gap-2">
+          {navLink("/", "Home", FiHome)}
+          {navLink("/about", "About", FiInfo)}
+          {navLink("/contact", "Contact", FiMail)}
+        </div>
 
         {/* Right Side */}
         {!user ? (
-          <div className="flex gap-3">
-            <Link href="/login" className="px-4 py-2 border rounded">
-              Login
-            </Link>
-            <Link href="/signup" className="px-4 py-2 bg-black text-white rounded">
-              Signup
-            </Link>
-          </div>
+          <Link
+            href="/login"
+            className="hidden md:inline px-4 py-2 rounded-xl bg-black text-white hover:bg-gray-800 transition"
+          >
+            Be Our Guest
+          </Link>
         ) : (
-          <div className="relative">
+          <div className="relative" ref={dropRef}>
             <button
-              onClick={() => setOpen(!open)}
-              className="flex items-center gap-2"
+              onClick={() => setDropdown(!dropdown)}
+              className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-100 transition"
             >
               <Image
                 src="/avtar.jpg"
+                width={36}
+                height={36}
+                className="rounded-full border-2 border-black"
                 alt="user"
-                width={32}
-                height={32}
-                className="rounded-full"
               />
               <span className="font-medium">{user.name}</span>
             </button>
 
-            {open && (
-              <div className="absolute right-0 mt-2 w-44 bg-white border rounded shadow">
+            {dropdown && (
+              <div className="absolute right-0 mt-4 w-56 p-2 bg-gray-400/60 backdrop-blur-xl rounded shadow-xl border">
                 <Link
                   href="/dashboard"
-                  className="block px-4 py-2 hover:bg-gray-100"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-black hover:text-white"
                 >
-                  Dashboard
+                  <FiUser /> Dashboard
                 </Link>
 
                 {user.role === "admin" && (
                   <Link
                     href="/admin"
-                    className="block px-4 py-2 hover:bg-gray-100"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-black hover:text-white"
                   >
-                    Admin Panel
+                    <FiSettings /> Admin Panel
                   </Link>
                 )}
 
                 <button
                   onClick={logout}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
+                  className="flex items-center gap-2 w-full px-4 py-2 mt-1 rounded-lg text-red-600 hover:bg-red-600 hover:text-white"
                 >
-                  Logout
+                  <FiLogOut /> Logout
                 </button>
               </div>
             )}
           </div>
         )}
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden text-2xl"
+        >
+          {menuOpen ? <FiX /> : <FiMenu />}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden p-4 space-y-2 bg-white/60 backdrop-blur border-t">
+          {navLink("/", "Home", FiHome)}
+          {navLink("/about", "About", FiInfo)}
+          {navLink("/contact", "Contact", FiMail)}
+
+          {!user && (
+            <Link
+              href="/login"
+              className="block text-center px-4 py-2 rounded-xl bg-black text-white"
+            >
+              Be Our Guest
+            </Link>
+          )}
+        </div>
+      )}
     </nav>
   );
 }
