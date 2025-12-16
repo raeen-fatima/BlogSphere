@@ -1,9 +1,14 @@
-import React from 'react'
+import ExploreBtn from "../../components/ExploreBtn";
+import YourBlog from "../../components/YourBlog";
+import { Toaster } from "react-hot-toast";
+
 
 function page() {
   return (
-    <div>
-      <h1>hello</h1>
+     <div className="max-w-5xl mx-auto mt-10 p-6">
+      <Toaster position="top-right" />
+      <ExploreBtn />
+      <YourBlog />
       
     </div>
   )

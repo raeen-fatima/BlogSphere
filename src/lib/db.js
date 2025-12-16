@@ -6,7 +6,7 @@ if (!MONGODB_URI) {
   throw new Error("❌ MONGODB_URI is missing in environment variables");
 }
 
-export async function connectDB() {
+export default async function connectDB() {
   if (mongoose.connection.readyState >= 1) return;
 
   await mongoose.connect(MONGODB_URI);

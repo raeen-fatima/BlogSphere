@@ -1,32 +1,59 @@
-import Link from "next/link";
+'use client'
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-6">
-      <h1 className="text-5xl font-bold leading-tight">
-        Share Your Ideas <br />
-        With The World 🌍
-      </h1>
+    <section className="relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div className="flex flex-col-reverse md:flex-row items-center gap-12">
 
-      <p className="text-gray-600 mt-4 max-w-xl">
-        A modern blogging platform built with Next.js, MongoDB and
-        secure authentication.
-      </p>
+          {/* Text Section */}
+          <motion.div
+            initial={{ x: -40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.7 }}
+            className="flex-1 text-center md:text-left"
+          >
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+              Welcome to{" "}
+              <span className="text-gray-600">BlogSphere</span>
+            </h1>
 
-      <div className="mt-6 flex gap-4">
-        <Link
-          href="/signup"
-          className="bg-black text-white px-6 py-2 rounded"
-        >
-          Start Writing
-        </Link>
+            <p className="mt-5 text-base sm:text-lg text-gray-600 max-w-xl mx-auto md:mx-0">
+              A modern hub for creators and readers to share ideas, insights,
+              and tech trends. Join us and shape the future of blogging.
+            </p>
 
-        <Link
-          href="/blogs"
-          className="border px-6 py-2 rounded"
-        >
-          Explore Blogs
-        </Link>
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="/login"
+              className="inline-block mt-8 px-7 py-3 bg-black text-white font-medium rounded-lg shadow-md hover:shadow-xl transition"
+            >
+              Get Started
+            </motion.a>
+          </motion.div>
+
+          {/* Image Section */}
+          <motion.div
+            initial={{ x: 40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.7 }}
+            className="flex-1 w-full"
+          >
+            <div className="relative w-full h-55 sm:h-75 md:h-90 lg:h-105">
+              <Image
+                src="/hero-about.jpg"
+                alt="BlogSphere Hero"
+                fill
+                priority
+                className="object-cover rounded-2xl border border-gray-200 shadow-lg hover:shadow-2xl transition"
+              />
+            </div>
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );
