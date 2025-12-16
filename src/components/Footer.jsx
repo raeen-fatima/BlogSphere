@@ -19,7 +19,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-black text-gray-400 py-12 mt-auto">
+    <footer className=" backdrop-blur-2xl border-t-2 text-black/20 py-12 mt-auto">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2 group">
@@ -29,13 +29,17 @@ export default function Footer() {
           >
             <FaFeatherAlt
               size={22}
-              className="text-white group-hover:text-gray-400 transition"
+              className="text-black group-hover:text-black/50 transition"
             />
           </motion.div>
-          <span className="text-xl font-bold tracking-tight bg-linear-to-r from-gray-300 to-gray-600 text-transparent bg-clip-text">
+          <span className="text-xl font-bold tracking-tight bg-linear-to-r from-black to-black/60 text-transparent bg-clip-text">
             BlogSphere
           </span>
+          
+          
+        
         </Link>
+        
 
         {/* Quick Links */}
         <motion.div
@@ -48,7 +52,7 @@ export default function Footer() {
             <Link
               key={link.name}
               href={link.href}
-              className= "text-gray-300 hover:text-gray-600 font-medium transition-colors"
+              className= "text-gray-500 hover:text-black/50 font-medium transition-colors"
             >
               {link.name}
             </Link>
@@ -68,7 +72,7 @@ export default function Footer() {
               href={social.href}
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
-              className="text-gray-300 hover:text-gray-500 transition"
+              className="text-black hover:text-black/60 transition"
             >
               {social.icon}
             </motion.a>
@@ -76,11 +80,11 @@ export default function Footer() {
         </motion.div>
       </div>
 
-      {/* Divider */}
-      <div className="border-t border-gray-700/75 mt-8" />
+      
+      
 
       {/* Copyright */}
-      <div className=" max-w-7xl mx-auto px-6 mt-6 text-center text-sm text-gray-500">
+      <div className=" max-w-7xl mx-auto px-6 mt-3 text-center text-sm text-black/50">
         © {new Date().getFullYear()} BlogSphere. All rights reserved.
       </div>
     </footer>

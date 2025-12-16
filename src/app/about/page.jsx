@@ -115,7 +115,7 @@ export default function AboutPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.7 }}
-        className="mt-28 text-center relative z-10"
+        className="m-28 text-center relative  z-10"
       >
         <h3 className="text-3xl md:text-4xl font-bold mb-4 text-black">
           Join the Premium Community
@@ -124,8 +124,8 @@ export default function AboutPage() {
           Write. Read. Inspire. Build your identity with BlogSphere Elite.
         </p>
         <a
-          href="/guest/login"
-          className="px-10 py-2 rounded  bg-black text-white  font-semibold hover:bg-gray-700 transition shadow-lg"
+          href="/login"
+          className="px-10 py-2 rounded-full  bg-black text-white  font-semibold hover:bg-gray-700 transition shadow-lg"
         >
           Get Started
         </a>
