@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { getUserFromToken } from "@/lib/auth";
+import { getUserFromCookie } from "@/lib/auth";
 
-export async function GET(req) {
-  const user = await getUserFromToken(req);
+export async function GET() {
+  const user = await getUserFromCookie(req);
 
   if (!user || user.role !== "admin") {
     return NextResponse.json(
