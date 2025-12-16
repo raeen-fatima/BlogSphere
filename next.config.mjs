@@ -2,15 +2,14 @@
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
-  images: {
-    domains: ["res.cloudinary.com"],
+   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
       },
     ],
-    // yaha apne image host ka domain daalo
   },
 };
 
