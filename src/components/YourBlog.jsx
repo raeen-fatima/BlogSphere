@@ -107,7 +107,7 @@ function YourBlog() {
               </div>
 
               {/* Image */}
-              <div className="relative w-full sm:w-56 h-48 sm:h-36 shrink-0 rounded-lg overflow-hidden">
+              <div className="relative w-full sm:w-56 h-48 sm:h-36 shrink-0 shadow-2xl overflow-hidden">
                 <Image
                   src={blog.image || "/placeholder.jpg"}
                   alt={blog.title || "Blog cover image"}
