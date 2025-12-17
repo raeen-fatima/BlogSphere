@@ -14,7 +14,7 @@ export default function BlogDetailClient({ blog }) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      <div className="flex text-sm text-gray-500 mt-6 just justify-between">
+      <div className="flex text-sm text-gray-500 mt-6  justify-between">
         {/* Author */}
         <div className="flex items-center gap-2 mb-3 ">
           <Image
@@ -33,12 +33,15 @@ export default function BlogDetailClient({ blog }) {
 
       <h1 className="text-4xl font-bold mb-4">{blog.title}</h1>
 
-      <div className="relative w-full h-86 mb-8">
+      <div className="relative w-full h-65 sm:h-95 mb-8">
+
         <Image
           src={blog.image || "/placeholder.jpg"}
           alt={blog.title || "Blog cover image"}
           fill
-          className="object-cover rounded-xl"
+          sizes="100vw"
+          priority
+          className="object-cover border-2 border-black/20"
         />
       </div>
 

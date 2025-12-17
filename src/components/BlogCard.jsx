@@ -11,11 +11,9 @@ import ReactMarkdown from "react-markdown";
 
 export default function BlogCard({ blog }) {
   const [showComments, setShowComments] = useState(false);
-  
 
   return (
     <div className="border-b border-black/40 py-6 transition-transform hover:scale-[1.01] duration-300">
-      
       {/* Author */}
       <div className="flex items-center gap-2 px-3 mb-3">
         <Image
@@ -32,7 +30,6 @@ export default function BlogCard({ blog }) {
 
       {/* Blog Content */}
       <div className="flex flex-col-reverse px-3 sm:flex-row gap-4 sm:gap-8">
-        
         {/* Text */}
         <div className="flex-1">
           <Link href={`/blog/${blog._id}`}>
@@ -52,6 +49,8 @@ export default function BlogCard({ blog }) {
             src={blog.image || "/placeholder.jpg"}
             alt={blog.title || "Blog cover image"}
             fill
+            sizes="(max-width: 640px) 100vw, 224px"
+            priority
             className="object-cover"
           />
         </div>
