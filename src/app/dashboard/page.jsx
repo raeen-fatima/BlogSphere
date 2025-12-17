@@ -1,17 +1,12 @@
-import ExploreBtn from "../../components/ExploreBtn";
-import YourBlog from "../../components/YourBlog";
-import { Toaster } from "react-hot-toast";
+import { getUserFromCookie } from "@/lib/auth";
+import DashboardContent from "@/components/DashboardContent";
 
+export default async function DashboardPage() {
+  const user = await getUserFromCookie();
 
-function page() {
-  return (
-     <div className="max-w-5xl mx-auto mt-10 p-6">
-      <Toaster position="top-right" />
-      <ExploreBtn />
-      <YourBlog />
-      
-    </div>
-  )
+  if (!user) return <p className="text-center mt-20">Please login</p>;
+
+  const userId = user.userId; // jwt me userId jo hai
+
+  return <DashboardContent userId={userId} />;
 }
-
-export default page

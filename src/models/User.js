@@ -17,9 +17,13 @@ const UserSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+
+    //profile fields
+
+    avatar: { type: String }, // optional
+    bio: { type: String }, // optional
   },
   { timestamps: true }
 );
 
-export default mongoose.models.User ||
-  mongoose.model("User", UserSchema);
+export default mongoose.models.User || mongoose.model("User", UserSchema);
