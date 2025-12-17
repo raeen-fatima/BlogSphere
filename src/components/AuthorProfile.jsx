@@ -59,22 +59,24 @@ export default function DashboardProfile() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md relative">
+    
+    <div className="max-w-md mx-auto p-6 border border-black/20 bg-white  shadow-2xl relative">
       {/* Avatar */}
       <div className="flex justify-center -mt-16 mb-4 relative">
         <Image
           src={user.avatar || "/avtar.jpg"}
           alt="Avatar"
-          className="w-24 h-24 rounded-full border-4 border-white shadow"
+          className="w-24 h-24  rounded-full border-2 border-black shadow"
           width={96}
           height={96}
         />
         {/* Optional: Edit Avatar button */}
         <button
-          className="absolute bottom-0 right-0 bg-gray-200 text-gray-700 px-2 py-1 text-xs rounded hover:bg-gray-300"
+          className="absolute bottom-0  bg-black text-white px-2 py-1 text-xs rounded-full hover:bg-black/60"
         >
           Change
-        </button>
+        </button>       
+        
       </div>
 
       {/* Profile Info */}
@@ -87,7 +89,7 @@ export default function DashboardProfile() {
               setFormData({ ...formData, name: e.target.value })
             }
             placeholder="Name"
-            className="w-full border rounded px-3 py-2"
+            className="w-full border-b border-black/30 focus:border-black focus:outline-none  px-3 py-2"
           />
           <textarea
             value={formData.bio}
@@ -95,18 +97,18 @@ export default function DashboardProfile() {
               setFormData({ ...formData, bio: e.target.value })
             }
             placeholder="Bio"
-            className="w-full border rounded px-3 py-2"
+            className="w-full border-b border-black/30 focus:border-black focus:outline-none px-3 py-2"
           />
           <div className="flex justify-between">
             <button
               onClick={() => setEditing(false)}
-              className="px-4 py-2 rounded border text-gray-700 hover:bg-gray-100"
+              className="px-6 py-1 rounded-full border-2 text-black hover:bg-black/20"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
+              className="px-6 py-1 rounded-full bg-black text-white hover:bg-black/30"
             >
               Save
             </button>
@@ -115,11 +117,11 @@ export default function DashboardProfile() {
       ) : (
         <>
           <h2 className="text-center text-2xl font-bold">{user.name}</h2>
-          <p className="text-center text-gray-500">@{user.username}</p>
+          <p className="text-center text-gray-500">@{user.name}</p>
           <p className="text-center mt-2 text-gray-600">{user.bio || "No bio yet"}</p>
 
           {/* Stats */}
-          <div className="flex justify-around mt-4 text-gray-700 font-medium">
+          <div className="flex justify-around mt-4 text-black font-semibold">
             <div>
               <span className="font-bold">{user.blogs || 0}</span> Blogs
             </div>
@@ -135,7 +137,7 @@ export default function DashboardProfile() {
           <div className="flex justify-center mt-4">
             <button
               onClick={() => setEditing(true)}
-              className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
+              className="px-6 py-1 rounded-full bg-black text-white hover:bg-black/30 hover:text-black"
             >
               Edit Profile
             </button>

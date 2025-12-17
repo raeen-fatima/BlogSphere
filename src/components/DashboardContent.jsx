@@ -54,7 +54,7 @@ function DashboardContent({ userId }) {
       <div className="">
         {activeTab === "profile" && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Your Profile</h2>
+            <h2 className="text-3xl font-bold mb-16 text-center bg-black/20">Your Profile</h2>
             <AuthorProfile authorId={userId} />
           </div>
         )}

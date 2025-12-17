@@ -70,7 +70,7 @@ export default function CreateBlogPage() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <Toaster position="top-right" />
 
-      <div className="w-full max-w-3xl border border-black/40 rounded-2xl shadow-xl p-6 sm:p-8 bg-white">
+      <div className="w-full max-w-3xl border border-black/40 rounded shadow-xl p-6 sm:p-8 bg-white">
         <h1 className="text-2xl sm:text-3xl font-extrabold mb-8 text-center">
           Create New Blog
         </h1>
@@ -95,7 +95,7 @@ export default function CreateBlogPage() {
           />
 
           {/* Image Upload */}
-          <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-400 rounded-xl p-6 cursor-pointer hover:bg-gray-50 transition">
+          <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-400  p-6 cursor-pointer hover:bg-gray-50 transition">
             <UploadCloud size={26} />
             <span className="text-sm text-gray-600">
               Click to upload cover image
@@ -122,7 +122,7 @@ export default function CreateBlogPage() {
 
           {/* Image Preview */}
           {preview && (
-            <div className="relative rounded-xl overflow-hidden border">
+            <div className="relative  overflow-hidden border">
               <img
                 src={preview}
                 alt="Preview"
