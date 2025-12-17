@@ -112,7 +112,7 @@ export default function Navbar() {
               <div className="absolute right-0 mt-4 w-56 p-2 bg-black/5 backdrop-blur-3xl rounded shadow-xl border border-gray-500/50 font-semibold">
                 <Link
                   href="/dashboard"
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-black hover:text-white"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-black hover:text-white"
                 >
                   <FiUser /> Dashboard
                 </Link>
@@ -120,7 +120,7 @@ export default function Navbar() {
                 {user.role === "admin" && (
                   <Link
                     href="/admin"
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-black hover:text-white"
+                    className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-black hover:text-white"
                   >
                     <FiSettings /> Admin Panel
                   </Link>
@@ -128,7 +128,7 @@ export default function Navbar() {
 
                 <button
                   onClick={logout}
-                  className="flex items-center gap-2 w-full px-4 py-2 mt-1 rounded-lg text-red-600 hover:bg-red-600 hover:text-white"
+                  className="flex items-center gap-2 w-full px-4 py-2 mt-1 rounded-full text-red-600 hover:bg-red-600 hover:text-white"
                 >
                   <FiLogOut /> Logout
                 </button>

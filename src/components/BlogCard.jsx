@@ -47,7 +47,7 @@ export default function BlogCard({ blog }) {
         </div>
 
         {/* Image */}
-        <div className="relative w-full sm:w-60 h-48 sm:h-40 shrink-0 overflow-hidden rounded-lg">
+        <div className="relative w-full sm:w-60 h-48 sm:h-40 shrink-0 overflow-hidden shadow-2xl ">
           <Image
             src={blog.image || "/placeholder.jpg"}
             alt={blog.title || "Blog cover image"}

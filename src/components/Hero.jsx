@@ -29,7 +29,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href="/login"
-              className="inline-block mt-8 px-7 py-3 bg-black text-white font-medium rounded-lg shadow-md hover:shadow-xl transition"
+              className="inline-block mt-8 px-7 py-2 bg-black text-white font-medium rounded-full shadow-md hover:shadow-xl transition"
             >
               Get Started
             </motion.a>
@@ -42,13 +42,13 @@ export default function Hero() {
             transition={{ duration: 0.7 }}
             className="flex-1 w-full"
           >
-            <div className="relative w-full h-55 sm:h-75 md:h-90 lg:h-105">
+            <div className="relative w-full h-45 sm:h-55 md:h-60 lg:h-65">
               <Image
                 src="/hero-about.jpg"
                 alt="BlogSphere Hero"
                 fill
                 priority
-                className="object-cover rounded-2xl border border-gray-200 shadow-lg hover:shadow-2xl transition"
+                className="object-cover  border border-gray-900/40 shadow-lg shadow-black hover:shadow-2xl transition"
               />
             </div>
           </motion.div>
