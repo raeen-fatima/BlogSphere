@@ -3,9 +3,9 @@ import Link from "next/link";
 
 function ExploreBtn() {
   return (
-    <div className="px-4">
+    <div className="">
       {/* PAGE HEADER */}
-      <div className="max-w-6xl mx-auto mt-10 mb-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="max-w-7xl mx-auto mt-10 mb-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         
         {/* Left Content */}
         <div>

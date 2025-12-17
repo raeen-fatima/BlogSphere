@@ -18,7 +18,7 @@ export default function BlogDetailClient({ blog }) {
         {/* Author */}
         <div className="flex items-center gap-2 mb-3 ">
           <Image
-            src="/avtar.jpg"
+            src={blog.author?.avatar || "/avtar.jpg"}
             alt={blog.author?.name || "Author avatar"}
             width={36}
             height={36}

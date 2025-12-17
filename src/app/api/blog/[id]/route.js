@@ -66,6 +66,7 @@ export async function PUT(req, { params }) {
     blog.title = body.title;
     blog.content = body.content;
     blog.image = body.image;
+    blog.imagePublicId = body.imagePublicId;
 
     await blog.save();
 
@@ -84,7 +85,7 @@ export async function GET(req, { params }) {
 
     const { id } = await params;
 
-    const blog = await Blog.findById(id).populate("author", "name email");
+    const blog = await Blog.findById(id).populate("author", "name avatar");
 
     if (!blog) {
       return NextResponse.json({ error: "Blog not found" }, { status: 404 });

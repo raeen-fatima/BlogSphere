@@ -62,7 +62,7 @@ function DashboardContent({ userId }) {
         {activeTab === "blogs" && (
           <div>
             
-            <YourBlog />
+           <YourBlog authorId={userId?._id} />
           </div>
         )}
       </div>

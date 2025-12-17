@@ -15,8 +15,8 @@ export async function GET() {
   }
 
   const blogs = await Blog.find({
-    author: user.userId, // 🔥 key line
-  }).sort({ createdAt: -1 });
+    author: user._id, // 🔥 key line
+  }).populate("author", "name email avatar").sort({ createdAt: -1 });
 
   return NextResponse.json(blogs);
 }

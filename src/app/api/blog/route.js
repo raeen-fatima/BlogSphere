@@ -24,10 +24,12 @@ export async function POST(req) {
     const blog = await Blog.create({
       title,
       content,
-      image, 
-      imagePublicId,              // ✅ SAVED HERE
-      author: user.userId,
+      image: image || "",
+      imagePublicId: imagePublicId || "",
+      author: user._id,
     });
+
+    await blog.populate("author", "name avatar");
 
     return NextResponse.json(
       { message: "Blog created", blog },
@@ -42,13 +44,12 @@ export async function POST(req) {
   }
 }
 
-
 export async function GET() {
   try {
     await connectDB();
 
     const blogs = await Blog.find()
-      .populate("author", "name email")
+      .populate("author", "name avatar")
       .sort({ createdAt: -1 });
 
     return NextResponse.json(blogs, { status: 200 });

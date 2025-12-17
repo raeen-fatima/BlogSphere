@@ -99,13 +99,13 @@ export default function Navbar() {
               className="flex items-center gap-2 px-6 py-2 rounded-full hover:bg-black/20 transition"
             >
               <Image
-                src="/avtar.jpg"
+                src={user?.avatar || "/avtar.jpg"}
                 width={36}
                 height={36}
                 className="rounded-full border-2 border-black"
                 alt="user"
               />
-              <span className="font-medium">{user.name}</span>
+              <span className="font-semibold">{user.name}</span>
             </button>
 
             {dropdown && (

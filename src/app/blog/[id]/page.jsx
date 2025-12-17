@@ -10,7 +10,7 @@ export default async function BlogDetailPage({ params }) {
   await connectDB();
 
   const blog = await Blog.findById(id)
-    .populate("author", "name email image")
+    .populate("author", "name avatar")
     .lean();
 
   if (!blog) return notFound();

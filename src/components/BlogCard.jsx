@@ -13,11 +13,12 @@ export default function BlogCard({ blog }) {
   const [showComments, setShowComments] = useState(false);
 
   return (
-    <div className="border-b border-black/40 py-6 transition-transform hover:scale-[1.01] duration-300">
+    <div className="">
+      <div className="border-b border-black/40 py-6 transition-transform hover:scale-[1.01] duration-300">
       {/* Author */}
       <div className="flex items-center gap-2 px-3 mb-3">
         <Image
-          src="/avtar.jpg"
+          src={blog.author?.avatar || "/avtar.jpg"}
           alt={blog.author?.name || "Author avatar"}
           width={40}
           height={40}
@@ -84,6 +85,7 @@ export default function BlogCard({ blog }) {
           <CommentBox blogId={blog._id} />
         </div>
       )}
+    </div>
     </div>
   );
 }
