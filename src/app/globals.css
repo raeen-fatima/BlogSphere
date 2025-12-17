@@ -1,2 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Quintessential&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Felipa&family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Quintessential&display=swap');
+
 @import "tailwindcss";
+
+body {
+  /* @apply bg-white text-black; */
+  /* font-family: 'Oswald', sans-serif; */
+    font-family: 'Libre Bodoni', serif;
+    /* font-family: 'Playfair', serif; */
+    /* font-family: 'Felipa', cursive; */
+    /* font-family: 'Quintessential', cursive; */
+    /* font-family: 'Inter', sans-serif; */
+ } 
+ 
+.font-oswald {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+
+}
+
+.font-playfair {
+  font-family: 'Playfair', serif;
+  font-weight: 600;
+}
+
+.font-felipa {
+  font-family: 'Felipa', cursive;
+}
+.font-quintessential {
+  font-family: 'Quintessential', cursive;
+}
+.font-libre-bodoni {
+  font-family: 'Libre Bodoni', serif;
+  font-weight: 600;
+}
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}

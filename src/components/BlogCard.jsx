@@ -17,7 +17,7 @@ export default function BlogCard({ blog }) {
     <div className="border-b border-black/40 py-6 transition-transform hover:scale-[1.01] duration-300">
       
       {/* Author */}
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex items-center gap-2 px-3 mb-3">
         <Image
           src="/avtar.jpg"
           alt={blog.author?.name || "Author avatar"}
@@ -25,13 +25,13 @@ export default function BlogCard({ blog }) {
           height={40}
           className="rounded-full border border-gray-600"
         />
-        <span className="font-medium text-gray-600">
+        <span className="font-semibold  text-gray-600">
           {blog.author?.name || "Anonymous"}
         </span>
       </div>
 
       {/* Blog Content */}
-      <div className="flex flex-col-reverse sm:flex-row gap-4 sm:gap-8">
+      <div className="flex flex-col-reverse px-3 sm:flex-row gap-4 sm:gap-8">
         
         {/* Text */}
         <div className="flex-1">
@@ -58,7 +58,7 @@ export default function BlogCard({ blog }) {
       </div>
 
       {/* Metadata */}
-      <div className="flex items-center justify-between mt-4 text-sm text-gray-500">
+      <div className="flex items-center px-3 justify-between mt-4 text-sm text-gray-500">
         <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
 
         <div className="flex items-center gap-4">
