@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import connectDB from "@/lib/db";
 import Blog from "@/models/Blog";
-// import User from "@/models/User";
+import cloudinary from "@/lib/Cloudinary"; // MISSING
 
 export async function DELETE(req, context) {
   try {

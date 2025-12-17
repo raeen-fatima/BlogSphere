@@ -77,7 +77,6 @@ function YourBlog() {
       <div className="grid gap-8 max-w-5xl mx-auto">
         {blogs.map((blog) => (
           <div key={blog._id} className="border-b border-black/40 pb-6">
-
             {/* Author */}
             <div className="flex items-center gap-2 mb-3">
               <Image
@@ -94,7 +93,6 @@ function YourBlog() {
 
             {/* Content */}
             <div className="flex flex-col-reverse sm:flex-row gap-4 sm:gap-6">
-              
               {/* Text */}
               <div className="flex-1">
                 <Link href={`/blog/${blog._id}`}>
@@ -114,6 +112,8 @@ function YourBlog() {
                   src={blog.image || "/placeholder.jpg"}
                   alt={blog.title || "Blog cover image"}
                   fill
+                  sizes="(max-width: 640px) 100vw, 224px"
+                  priority
                   className="object-cover"
                 />
               </div>
