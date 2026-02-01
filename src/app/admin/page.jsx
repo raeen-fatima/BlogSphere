@@ -1,8 +1,19 @@
-export default function AdminPage() {
+import connectDB from "@/lib/db";
+import Blog from "@/models/Blog";
+import User from "@/models/User";
+import AdminDashboard from "@/components/AdminDashboard";
+
+export default async function AdminPage() {
+  await connectDB();
+
+  const totalBlogs = await Blog.countDocuments();
+  const pendingBlogs = await Blog.countDocuments({ status: "pending" });
+  const totalUsers = await User.countDocuments();
+
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1>Admin Dashboard</h1>
-      <p>Only admins can access this page.</p>
-    </main>
+    <AdminDashboard
+      stats={{ totalBlogs, pendingBlogs, totalUsers }}
+    />
+    
   );
 }

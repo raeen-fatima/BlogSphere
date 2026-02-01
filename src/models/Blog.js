@@ -22,16 +22,20 @@ const blogSchema = new mongoose.Schema(
     },
 
     imagePublicId: {
-      type: String, 
+      type: String,
       default: "",
-    } ,
+    },
 
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "approved",
+    },
     //for likes
 
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 
     // comments: [commentSchema],
-
   },
   { timestamps: true }
 );

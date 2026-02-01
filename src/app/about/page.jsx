@@ -115,7 +115,7 @@ export default function AboutPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.7 }}
-        className="m-28 text-center relative  z-10"
+        className="m-8 text-center relative  z-10"
       >
         <h3 className="text-3xl md:text-4xl font-bold mb-4 text-black">
           Join the Premium Community

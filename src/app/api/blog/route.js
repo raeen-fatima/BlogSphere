@@ -27,6 +27,7 @@ export async function POST(req) {
       image: image || "",
       imagePublicId: imagePublicId || "",
       author: user._id,
+      status: "approved",
     });
 
     await blog.populate("author", "name avatar");

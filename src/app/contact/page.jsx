@@ -20,12 +20,24 @@ export default function ContactPage() {
     e.preventDefault();
     setLoading(true);
 
-    // 🚧 Backend later
-    setTimeout(() => {
-      toast.success("Message sent successfully ✨");
-      setForm({ name: "", email: "", message: "" });
-      setLoading(false);
-    }, 800);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        toast.success("Form submitted successfully!");
+        setForm({ name: "", email: "", message: "" }); // reset state
+      } else {
+        toast.error("Something went wrong!");
+      }
+    } catch (err) {
+      toast.error("Server error!");
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -33,12 +45,11 @@ export default function ContactPage() {
       <Toaster position="top-right" />
 
       <div className="w-full max-w-4xl bg-white rounded shadow-xl border border-black/20 grid md:grid-cols-2 overflow-hidden">
-        
-        {/* Left Section */}
+
         <div className="bg-black text-white p-8 flex flex-col justify-center space-y-4">
           <h2 className="text-3xl font-bold">Get in Touch</h2>
           <p className="text-gray-300">
-            Have a question, feedback, or just want to say hi?  
+            Have a question, feedback, or just want to say hi?
             We'd love to hear from you.
           </p>
 
@@ -48,56 +59,43 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Right Section */}
-        <form
-          onSubmit={handleSubmit}
-          className="p-8 space-y-6"
-        >
+        <form onSubmit={handleSubmit} className="p-8 space-y-6">
           <h3 className="text-4xl font-bold text-center">Contact Us</h3>
 
-          <div className="space-y-1">
-            <label className="text-sm text-gray-600">Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Your name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              className="w-full border-b border-gray-300 p-3 focus:outline-none focus:border-black transition"
-            />
-          </div>
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Your name"
+            required
+            className="w-full border-b border-gray-300 p-3 focus:outline-none focus:border-black"
+          />
 
-          <div className="space-y-1">
-            <label className="text-sm text-gray-600">Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="you@example.com"
-              value={form.email}
-              onChange={handleChange}
-              required
-              className="w-full border-b border-gray-300 p-3 focus:outline-none focus:border-black transition"
-            />
-          </div>
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            placeholder="you@example.com"
+            required
+            className="w-full border-b border-gray-300 p-3 focus:outline-none focus:border-black"
+          />
 
-          <div className="space-y-1">
-            <label className="text-sm text-gray-600">Message</label>
-            <textarea
-              name="message"
-              rows="4"
-              placeholder="Write your message..."
-              value={form.message}
-              onChange={handleChange}
-              required
-              className="w-full border-b border-gray-300 p-3 resize-none focus:outline-none focus:border-black transition"
-            />
-          </div>
+          <textarea
+            name="message"
+            rows="4"
+            value={form.message}
+            onChange={handleChange}
+            placeholder="Write your message..."
+            required
+            className="w-full border-b border-gray-300 p-3 resize-none focus:outline-none focus:border-black"
+          />
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded bg-black text-white font-medium hover:bg-gray-800 transition disabled:opacity-60"
+            className="w-full py-3 rounded bg-black text-white font-medium hover:bg-gray-800 disabled:opacity-60"
           >
             {loading ? "Sending..." : "Send Message"}
           </button>
