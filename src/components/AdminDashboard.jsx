@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 export default function AdminDashboard({ stats }) {
+  
   return (
     <main className="max-w-7xl mx-auto px-6 py-10">
       {/* Header */}

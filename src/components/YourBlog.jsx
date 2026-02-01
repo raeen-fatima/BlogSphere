@@ -54,9 +54,10 @@ function YourBlog() {
 
   if (loading) {
     return (
-      <div className="flex justify-center mt-20">
-        <p className="animate-pulse text-gray-500">Loading your blogs...</p>
-      </div>
+      <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-gray-500 text-sm font-bold">Loading blogs...</p>
+        </div>
     );
   }
 

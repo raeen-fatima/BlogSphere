@@ -84,13 +84,13 @@ export default function DashboardProfile() {
   };
 
   if (loading || !user) {
-  return (
-    <p className="text-center mt-10 animate-pulse text-gray-500">
-      Loading profile...
-    </p>
-  );
-}
-
+    return (
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-10 h-10 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-gray-500 text-sm font-bold">Loading profile...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-md mx-auto p-6 border border-black/20 bg-white  shadow-2xl relative">

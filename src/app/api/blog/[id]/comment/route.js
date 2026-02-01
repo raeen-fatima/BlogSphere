@@ -25,7 +25,7 @@ export async function POST(req, { params }) {
 
     const comment = await Comment.create({
       blog: id,
-      user: user.userId,
+      user: user._id,
       text,
     });
 
